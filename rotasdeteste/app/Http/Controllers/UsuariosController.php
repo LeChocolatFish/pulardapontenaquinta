@@ -1,0 +1,140 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\usuarios;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
+
+class UsuariosController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $regUsuarios = usuarios::All();
+        $contador = $regUsuarios->count();
+        return Response()->json($regUsuarios);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //NM_usuario email senha cpf
+        $validator = Validator::make($request->all(), [
+            'NM_usuario' => 'required',
+            'email' => 'required|email',
+            'senha' => 'required',
+            'cpf' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'registros inválidos',
+                'errors' => $validator->errors()
+            ], 400);
+        }
+
+        $registros = usuarios::create($request->all());
+        if ($registros) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Usuário cadastrado com sucesso',
+                'data' => $registros
+            ], 201);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'erro ao cadastrar o usuário'
+            ], 500);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(usuarios $usuarios)
+    {
+        $regUsuarios = usuarios::find($id);
+        if ($regUsuarios) {
+            return 'usuario localizado';
+            $regUsuarios.Response()->json([],
+            Response::HTTP_NO_CONTENT);
+        }else{
+            return 'usuario não localizado';
+            Response()->json([],
+            Response::HTTP_NO_CONTENT);
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, usuarios $usuarios)
+    {
+        $validator = Validator::make($request->all(), [
+            'NM_usuario' => 'required',
+            'email' => 'required|email',
+            'senha' => 'required',
+            'cpf' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'registros inválidos',
+                'errors' => $validator->errors()
+            ], 400);
+        }
+        $regUsuariosBanco = usuarios::find($id);
+
+        if (!$regUsuariosBanco) {
+            return response()->json([
+                'success' => false,
+                'message' => 'usuario não encontrado'
+            ], 404);
+        }
+        $regUsuariosBanco->NM_usuario = $request->NM_usuario;
+        $regUsuariosBanco->email = $request->email;
+        $regUsuariosBanco->senha = $request->senha;
+        $regUsuariosBanco->cpf = $request->cpf;
+
+        if ($regUsuariosBanco->save()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'usuario atualizado com sucesso',
+                'data' => $regUsuariosBanco
+            ], 201);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'erro ao atualizar o usuario'
+            ], 500);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(usuarios $usuarios)
+    {
+        $regUsuarios = usuarios::find($id);
+        if (!$regUsuarios) {
+            return response()->json([
+                'success' => false,
+                'message' => 'usuario não encontrado'
+            ], 404);
+
+            if ($regUsuarios->delete()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'usuario deletado com sucesso'
+                ], 200);
+            }
+        }
+    }
+}
