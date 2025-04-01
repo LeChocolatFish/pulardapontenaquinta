@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('NM_usuario');
             $table->string('email');
             $table->string('senha');
-            $table->int('cpf');
+            $table->string('cpf', 11);
             $table->timestamps();
         });
     }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\formulario;
+use App\Models\Formulario;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;

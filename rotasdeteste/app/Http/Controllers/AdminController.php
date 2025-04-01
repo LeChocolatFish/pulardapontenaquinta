@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\admin;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
@@ -15,7 +15,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $regAdmin = admin::all();
+        $regAdmin = Admin::all();
         $contador = $regAdmin->count();
 
         return Response()->json($regAdmin);

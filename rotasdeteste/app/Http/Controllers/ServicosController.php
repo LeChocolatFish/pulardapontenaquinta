@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\servicos;
+use App\Models\Servicos;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;

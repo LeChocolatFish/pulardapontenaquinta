@@ -8,11 +8,11 @@ class Instituicoes extends Model
 {
     protected $fillable = [
         'status',
-        'nome',
-        'email',
+        'NM_instituicao',
+        'email_instituicao',
         'senha',
         'descricao',
-        'endereco',
+        'endereco_intituicao',
         'telefone'
     ];
-}
+} 
