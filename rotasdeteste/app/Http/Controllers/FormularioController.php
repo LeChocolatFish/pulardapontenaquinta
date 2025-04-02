@@ -93,7 +93,7 @@ class FormularioController extends Controller
             return respone()->json([
                 'success' => false,
                 'message' => 'formulario não encontrado',
-            ], 400);
+            ], 404);
         }
 
         $regFormularioBanco->status = $request->status;
@@ -117,10 +117,17 @@ class FormularioController extends Controller
      */
     public function destroy(formulario $formulario)
     {
-        return response()->json([
-            'success' => true,
-            'message' => 'formulario deletado com sucesso',
-            'data' => $formulario
-        ], 200);
+        $regFormulario = formulario::find($id);
+        if (!$regFormulario) {
+            return response()->json([
+                'success' => false,
+                'message' => 'formulario não encontrado'
+            ], 404);
+
+            if ($regFormulario->delete()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'formulario deletado com sucesso'
+                ], 200);
     }
 }

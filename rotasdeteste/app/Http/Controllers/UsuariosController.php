@@ -25,10 +25,10 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //NM_usuario email senha cpf
+        //nm_usuario email senha cpf
         $validator = Validator::make($request->all(), [
-            'NM_usuario' => 'required',
-            'email' => 'required|email',
+            'nm_usuario' => 'required',
+            'email' => 'required',
             'senha' => 'required',
             'cpf' => 'required'
         ]);
@@ -78,8 +78,8 @@ class UsuariosController extends Controller
     public function update(Request $request, usuarios $usuarios)
     {
         $validator = Validator::make($request->all(), [
-            'NM_usuario' => 'required',
-            'email' => 'required|email',
+            'nm_usuario' => 'required',
+            'email' => 'required',
             'senha' => 'required',
             'cpf' => 'required'
         ]);
@@ -98,7 +98,7 @@ class UsuariosController extends Controller
                 'message' => 'usuario não encontrado'
             ], 404);
         }
-        $regUsuariosBanco->NM_usuario = $request->NM_usuario;
+        $regUsuariosBanco->nm_usuario = $request->nm_usuario;
         $regUsuariosBanco->email = $request->email;
         $regUsuariosBanco->senha = $request->senha;
         $regUsuariosBanco->cpf = $request->cpf;

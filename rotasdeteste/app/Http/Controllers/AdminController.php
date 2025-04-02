@@ -27,15 +27,15 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'NM_admin' => 'required|string|max:255',
-            'email_admin' => 'required|string|email|max:255|unique:admin',
-            'senha' => 'required|string|min:8',
+            'nm_admin' => 'required',
+            'email_admin' => 'required',
+            'senha' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json([
                 'succes' => false,
                 'message' => 'registros inválidos',
-                'errors' => $validator->errors()], 422);
+                'errors' => $validator->errors()], 400);
         }
 
         $registros = Admin::create($request->all());
@@ -75,9 +75,9 @@ class AdminController extends Controller
     public function update(Request $request, admin $admin)
     {
         $validator = Validator::make($request->all(), [
-            'NM_admin' => 'required|string|max:255',
-            'email_admin' => 'required|string|email|max:255|unique:admin',
-            'senha' => 'required|string|min:8',
+            'nm_admin' => 'required',
+            'email_admin' => 'required',
+            'senha' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -93,10 +93,10 @@ class AdminController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'admin não encontrado',
-            ], 400);
+            ], 404);
         }
 
-        $regAdminBanco->Nm_admin = $request->Nm_admin;
+        $regAdminBanco->nm_admin = $request->nm_admin;
         $regAdminBanco->email_admin = $request->email_admin;
         $regAdminBanco->senha = $request->senha;
 
