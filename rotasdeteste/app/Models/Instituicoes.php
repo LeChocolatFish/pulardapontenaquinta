@@ -12,6 +12,6 @@ class Instituicoes extends Model
         'senha',
         'descricao',
         'endereco_intituicao',
-        'telefone'
+        'telefone',
     ];
 } 

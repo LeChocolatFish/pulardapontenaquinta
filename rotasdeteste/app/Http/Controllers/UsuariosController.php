@@ -58,24 +58,28 @@ class UsuariosController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(usuarios $usuarios)
+    public function show($id)
     {
         $regUsuarios = usuarios::find($id);
+
         if ($regUsuarios) {
-            return 'usuario localizado';
-            $regUsuarios.Response()->json([],
-            Response::HTTP_NO_CONTENT);
+            return response()->json([
+                'success' => true,
+                'message' => 'usuario encontrado',
+                'data' => $regUsuarios
+            ], 200);
         }else{
-            return 'usuario não localizado';
-            Response()->json([],
-            Response::HTTP_NO_CONTENT);
+            return response()->json([
+                'success' => false,
+                'message' => 'usuario não encontrado'
+            ], 404);
         }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, usuarios $usuarios)
+    public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
             'nm_usuario' => 'required',
@@ -120,21 +124,22 @@ class UsuariosController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(usuarios $usuarios)
+    public function destroy($id)
     {
         $regUsuarios = usuarios::find($id);
+
         if (!$regUsuarios) {
             return response()->json([
                 'success' => false,
                 'message' => 'usuario não encontrado'
             ], 404);
-
+        }
             if ($regUsuarios->delete()) {
                 return response()->json([
-                    'success' => false,
+                    'success' => true,
                     'message' => 'usuario deletado com sucesso'
                 ], 200);
             }
-        }
+        
     }
 }

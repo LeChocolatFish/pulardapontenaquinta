@@ -9,6 +9,6 @@ class Admin extends Model
     protected $fillable = [
         'NM_admin',
         'email_admin',
-        'senha'
+        'senha',
     ];
 }
